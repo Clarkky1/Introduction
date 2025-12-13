@@ -43,10 +43,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Step 3: Deploy the generated files to the 'output' branch
+      # Step 3: Verify files were generated
+      - name: List generated files
+        run: ls -la dist/ || echo "Dist directory not found"
+
+      # Step 4: Deploy the generated files to the 'output' branch
       - name: Deploy to Output Branch
         uses: peaceiris/actions-gh-pages@v3
-        if: always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
